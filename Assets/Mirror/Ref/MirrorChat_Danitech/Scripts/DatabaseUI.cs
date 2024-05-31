@@ -4,12 +4,14 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using Unity.VisualScripting;
-public class DatabaseUI : MonoBehaviour
+public class DatabaseUI : Singleton<DatabaseUI>
 {
-   [Header("UI")]
-   [SerializeField] InputField Input_Query;
-   [SerializeField] Text Text_DBResult;
-   [SerializeField] Text Text_Log;
+    [Header("UI")]
+
+    [SerializeField] InputField Input_Id;
+    [SerializeField] Text Input_CheckId;
+    [SerializeField] Text Text_DBResult;
+    [SerializeField] Text Text_Log;
 
     [Header("CommectionInfo")]
     [SerializeField] string _ip = "127.0.0.1";
@@ -17,22 +19,30 @@ public class DatabaseUI : MonoBehaviour
     [SerializeField] string _uid = "root";
     [SerializeField] string _pwd = "1234";
     [SerializeField] string _port = "3307";
+    private string _getId = "SELECT * FROM members where nickname =";
+    public string GetIdQuery { get => _getId; }
 
     private bool _isConnectTestComplete; //중요하진 않음
     private static MySqlConnection _dbConnection;
     private void SendQuery(string queryStr, string tableName)
     {
-        //있으면 Select 관련 함수 호출
-        if(queryStr.Contains("SELECT"))
+        //여기로 들어온 쿼리문에 SELECT가 포함되어 있으면 if 탐
+        if (queryStr.Contains("SELECT"))
         {
             DataSet dataSet = OnSelectRequest(queryStr, tableName);
+            Debug.Log(dataSet);
             Text_DBResult.text = DeformatResult(dataSet);
         }
         else // 없다면 INSERT 또는 UPDATE 관련 쿼리
         {
-            Text_DBResult.text = OnInsertOnUpdateRequest(queryStr) ? "성공" : "실패";
+            if (Input_CheckId.text == "")
+            {
+                Input_CheckId.text = "아이디를 입력해 주세요.";
+            }
+
+            //Text_DBResult.text = OnInsertOnUpdateRequest(queryStr) ? "성공" : "실패";
         }
-     
+
     }
     public static bool OnInsertOnUpdateRequest(string query)
     {
@@ -46,29 +56,33 @@ public class DatabaseUI : MonoBehaviour
             sqlCommand.ExecuteNonQuery();
             _dbConnection.Close();
             return true;
-        }catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             return false;
         }
     }
     private void Awake()
     {
+        _isConnectTestComplete = ConnectTest();
         //this.gameObject.SetActive(false);
+
     }
 
     private string DeformatResult(DataSet dataSet)
     {
         string resultStr = string.Empty;
-        foreach(DataTable table in dataSet.Tables)
+        foreach (DataTable table in dataSet.Tables)
         {
-            foreach(DataRow row in table.Rows)
+            foreach (DataRow row in table.Rows)
             {
-                foreach(DataColumn column in table.Columns)
+                foreach (DataColumn column in table.Columns)
                 {
                     resultStr += $"{column.ColumnName} : {row[column]}\n";
                 }
             }
         }
+        Debug.Log(resultStr);
         return resultStr;
     }
     public static DataSet OnSelectRequest(string query, string tableName)
@@ -84,8 +98,10 @@ public class DatabaseUI : MonoBehaviour
             sd.Fill(dataSet, tableName);
             _dbConnection.Close();
             return dataSet;
-        } catch(Exception e) {
-        Debug.Log(e.ToString());
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.ToString());
             return null;
         }
     }
@@ -104,32 +120,32 @@ public class DatabaseUI : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogWarning($"e: {e.ToString()}");
-            Text_Log.text = "DB연결 실패";
+            //Debug.LogWarning($"e: {e.ToString()}");
+            //Text_Log.text = "DB연결 실패";
+            Debug.LogWarning("[1.디비 연결 실패]");
             return false;
         }
     }
 
-  
-    public void OnClick_TestDBConnect()
+
+    public void OnClick_IdChk()
     {
-        _isConnectTestComplete = ConnectTest();
-       
+
     }
 
     // 보내기 버튼 클릭 시 타는 함수 
     public void OnSubmit_SendQuery()
     {
-        if(_isConnectTestComplete == false)
+        if (_isConnectTestComplete == false)
         {
             Text_Log.text = "DB 연결을 먼저 시도해주세요";
             return;
         }
         Debug.Log("보내기 클릭");
         Text_Log.text = string.Empty;
-
-        string query = string.IsNullOrWhiteSpace(Input_Query.text) ? "SELECT U_Name,U_Password FROM user_info" : Input_Query.text;
-         SendQuery(query, "user_info");
+        string query = string.IsNullOrWhiteSpace(Input_Id.text) ? "" : $"{GetIdQuery + Input_Id.text}";
+        Debug.Log(query);
+        SendQuery(query, "members");
     }
 
     public void OnClick_OpenDatabaseUI()
