@@ -45,8 +45,8 @@ public class DatabaseUI : Singleton<DatabaseUI>
         if (queryStr.Contains("SELECT"))
         {
             DataSet dataSet = OnSelectRequest(queryStr, tableName);
+            return dataSet != null ? DeformatResult(dataSet) : string.Empty;
 
-              return DeformatResult(dataSet);
         }
         
             return string.Empty;
@@ -169,13 +169,11 @@ public class DatabaseUI : Singleton<DatabaseUI>
             return;
         }
 
-        // Parse the result to extract the actual password value
         string retrievedPassword = ExtractPassword(result);
 
         if (retrievedPassword == Input_Pw.text)
         {
             Input_CheckIdPw_Error.text = "로그인 성공!";
-            // Add any additional actions on successful login
         }
         else
         {
@@ -228,6 +226,8 @@ public class DatabaseUI : Singleton<DatabaseUI>
         }
 
     }
+
+    //회원가입 완료 팝업
     public void OnSubmit_Join_success()
     {
         if (!_IdChk)
@@ -244,10 +244,15 @@ public class DatabaseUI : Singleton<DatabaseUI>
         }
         else
         {
+            Btn_confirm.SetActive(!Btn_confirm.activeSelf);
             Debug.Log("가입완료!");
         }
     }
 
+    public void OnSubmit_Join_success_btn()
+    {
+
+    }
     public void OnClick_JoinUi_Exit()
     {
         JoinUi.SetActive(!JoinUi.activeSelf);
