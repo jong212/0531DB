@@ -17,10 +17,12 @@ public class DatabaseUI : Singleton<DatabaseUI>
     [SerializeField] Text Text_Log;
 
     // 회원가입 Ui
+    [SerializeField] GameObject JoinUi;
     [SerializeField] InputField Input_JoinId;
     [SerializeField] InputField Input_JoinPw;
     [SerializeField] InputField Input_JoinPwChk;
-    [SerializeField] Text Input_JoinMessage;
+    [SerializeField] Text Input_JoinIdMessage;
+    [SerializeField] Text Input_JoinIdMessage2;
 
     [Header("CommectionInfo")]
     string _ip = "13.124.160.199"; // Ensure this is your server's IP
@@ -31,6 +33,8 @@ public class DatabaseUI : Singleton<DatabaseUI>
 
     private string _getId = "SELECT * FROM u_info where Nickname =";
     public string GetIdQuery { get => _getId; }
+    private bool _idchk;
+    public bool _IdChk { get => _idchk; set => _idchk = value; }
 
     private bool _isConnectTestComplete; //중요하진 않음
     private static MySqlConnection _dbConnection;
@@ -194,16 +198,58 @@ public class DatabaseUI : Singleton<DatabaseUI>
 
     public void OnSubmit_Join_idCheck()
     {
+        string query = string.Empty;
+        if (_isConnectTestComplete == false)
+        {
+            Text_Log.text = "DB 연결을 먼저 시도해주세요";
+            return;
+        }
+        if(string.IsNullOrWhiteSpace(Input_JoinId.text))
+        {
+            Input_JoinIdMessage.text = "아이디를 입력해 주세요";
+        } else
+        {
+                 
+            query = $"SELECT Password FROM u_info WHERE Nickname = '{Input_JoinId.text}'";
+            string result = SendQuery(query, "u_info");
+
+            if (string.IsNullOrEmpty(result))
+            {
+                Input_JoinIdMessage.text = "사용 가능";
+                _IdChk = true;
+                return;
+            }
+            else
+            {
+                Input_JoinIdMessage.text = "사용중인 아이디";
+                _IdChk = false;
+            }
+        }
 
     }
-    public void OnSubmit_Join()
+    public void OnSubmit_Join_success()
     {
-
+        if (!_IdChk)
+        {
+            Input_JoinIdMessage2.text = "아이디 중복체크 필수";
+        }
+        else if (string.IsNullOrEmpty(Input_JoinPw.text))
+        {
+            Input_JoinIdMessage2.text = "비밀번호를 입력해주세요";
+        }
+        else if (Input_JoinPw.text != Input_JoinPwChk.text)
+        {
+            Input_JoinIdMessage2.text = "비밀번호를 서로 다르게 입력함";
+        }
+        else
+        {
+            Debug.Log("가입완료!");
+        }
     }
 
-    public void Ontest()
+    public void OnClick_JoinUi_Exit()
     {
-        Debug.Log("test123");
+        JoinUi.SetActive(!JoinUi.activeSelf);
     }
     public void OnClick_OpenDatabaseUI()
     {
