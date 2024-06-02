@@ -23,6 +23,7 @@ public class DatabaseUI : Singleton<DatabaseUI>
     [SerializeField] InputField Input_JoinPwChk;
     [SerializeField] Text Input_JoinIdMessage;
     [SerializeField] Text Input_JoinIdMessage2;
+    [SerializeField] GameObject Btn_confirm;
 
     [Header("CommectionInfo")]
     string _ip = "13.124.160.199"; // Ensure this is your server's IP
