@@ -4404,8 +4404,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 481765392319234996}
   m_TextComponent: {fileID: 6700706963157216384}
   m_Placeholder: {fileID: 7467677773928098000}
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0

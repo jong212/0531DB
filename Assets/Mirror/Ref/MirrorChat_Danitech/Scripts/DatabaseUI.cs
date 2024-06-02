@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using Unity.VisualScripting;
+
 public class DatabaseUI : Singleton<DatabaseUI>
 {
     [Header("UI")]
@@ -144,7 +145,6 @@ public class DatabaseUI : Singleton<DatabaseUI>
         Text_Log.text = string.Empty;
         if (string.IsNullOrWhiteSpace(Input_Id.text) || string.IsNullOrWhiteSpace(Input_Pw.text))
         {
-
             Input_CheckIdPw_Error.text = "아이디와 비밀번호를 입력해 주세요.";
             return;
         }
@@ -163,18 +163,32 @@ public class DatabaseUI : Singleton<DatabaseUI>
             return;
         }
 
-        // Assuming SendQuery returns the password as a string
-        string retrievedPassword = result.Trim(); // Clean up the result if necessary
+        // Parse the result to extract the actual password value
+        string retrievedPassword = ExtractPassword(result);
 
         if (retrievedPassword == Input_Pw.text)
         {
-            Text_DBResult.text = "로그인 성공!";
+            Input_CheckIdPw_Error.text = "로그인 성공!";
             // Add any additional actions on successful login
         }
         else
         {
-            Text_DBResult.text = "비밀번호가 일치하지 않습니다.";
+            Input_CheckIdPw_Error.text = "비밀번호가 일치하지 않습니다.";
         }
+    }
+
+    // Helper method to extract the password from the result
+    private string ExtractPassword(string result)
+    {
+        string[] lines = result.Split('\n');
+        foreach (string line in lines)
+        {
+            if (line.StartsWith("Password : "))
+            {
+                return line.Substring("Password : ".Length).Trim();
+            }
+        }
+        return string.Empty;
     }
 
     public void Ontest()
