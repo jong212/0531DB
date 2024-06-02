@@ -293,19 +293,7 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnSubmit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7978661148926486677}
-        m_TargetAssemblyTypeName: DatabaseUI, Assembly-CSharp
-        m_MethodName: OnSubmit_SendQuery
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnDidEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -882,19 +870,7 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnSubmit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7978661148926486677}
-        m_TargetAssemblyTypeName: DatabaseUI, Assembly-CSharp
-        m_MethodName: OnSubmit_SendQuery
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnDidEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -1935,19 +1911,7 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnSubmit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7978661148926486677}
-        m_TargetAssemblyTypeName: DatabaseUI, Assembly-CSharp
-        m_MethodName: OnSubmit_SendQuery
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnDidEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -2840,19 +2804,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 82788235782057007}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DatabaseUI, Assembly-CSharp
-        m_MethodName: OnClick_CloseDatabaseUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &4986762364173496173
 GameObject:
   m_ObjectHideFlags: 0
@@ -5541,7 +5493,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8658117275715454104}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7978661148926486677}
+        m_TargetAssemblyTypeName: DatabaseUI, Assembly-CSharp
+        m_MethodName: OnSubmit_Join_success_btn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9135875526426058284
 GameObject:
   m_ObjectHideFlags: 0

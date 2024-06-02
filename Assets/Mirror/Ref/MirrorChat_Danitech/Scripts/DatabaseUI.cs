@@ -251,11 +251,14 @@ public class DatabaseUI : Singleton<DatabaseUI>
 
     public void OnSubmit_Join_success_btn()
     {
+        JoinUi.SetActive(!JoinUi.activeSelf);
+        Btn_confirm.SetActive(!Btn_confirm.activeSelf);
 
     }
     public void OnClick_JoinUi_Exit()
     {
         JoinUi.SetActive(!JoinUi.activeSelf);
+
     }
     public void OnClick_OpenDatabaseUI()
     {
