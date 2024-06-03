@@ -26,7 +26,7 @@ public class DatabaseUI : Singleton<DatabaseUI>
     [SerializeField] GameObject Btn_confirm;
 
     [Header("CommectionInfo")]
-    string _ip = "13.124.160.199"; // Ensure this is your server's IP
+    string _ip = "43.203.127.106"; // Ensure this is your server's IP
     string _dbName = "test";
     string _uid = "root";
     string _pwd = "1q2w3e4r!";
